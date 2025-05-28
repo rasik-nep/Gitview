@@ -1,5 +1,6 @@
 import { getRepoDetails } from "@/libs/github";
 import { notFound } from "next/navigation";
+import FavoriteButton from "@/component/FavoriteButton";
 
 type RepoPageProps = {
   params: { owner: string; repo: string };
@@ -22,6 +23,7 @@ export default async function RepoPage({ params }: RepoPageProps) {
           <li>🛠 Language: {data.language}</li>
           <li>⏱ Last updated: {new Date(data.updated_at).toLocaleString()}</li>
         </ul>
+        <FavoriteButton repo={data} />
       </div>
     );
   } catch (error) {

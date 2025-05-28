@@ -10,7 +10,6 @@ export async function getUserRepos(username: string): Promise<Repo[]> {
     headers,
     next: { revalidate: 60 }, // ISR
   });
-  console.log("refetching");
   if (!res.ok) {
     throw new Error(`Failed to fetch repositories for ${username}`);
   }
