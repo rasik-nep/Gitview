@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 export default async function ReposPage() {
-  // await new Promise((r) => setTimeout(r, 2000)); // simulate a slow response
+  await new Promise((r) => setTimeout(r, 2000)); // simulate a slow response
 
   const repos = await getUserRepos("rasik-nep");
 
