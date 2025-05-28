@@ -7,7 +7,9 @@ type RepoPageProps = {
 };
 
 export default async function RepoPage({ params }: RepoPageProps) {
-  const { owner, repo } = params;
+  // Ensure the entire params object is properly awaited
+  const resolvedParams = await Promise.resolve(params);
+  const { owner, repo } = resolvedParams;
 
   try {
     const data = await getRepoDetails(owner, repo);

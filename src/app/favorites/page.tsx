@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/component/Loading";
 import { useEffect, useState } from "react";
 
 interface FavoriteRepo {
@@ -48,7 +49,7 @@ export default function FavoritesPage() {
     }
   }
 
-  if (loading) return <p>Loading favorites...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>{error}</p>;
   if (favorites.length === 0) return <p>No favorites yet.</p>;
 

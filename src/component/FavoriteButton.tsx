@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Repo } from "@/types/github";
 
@@ -8,6 +8,27 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // useEffect to check if repo is favorited on mount
+  useEffect(() => {
+    const checkIfFavorited = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch("/api/favorites");
+        if (!response.ok) {
+          throw new Error("Failed to fetch favorites");
+        }
+        const favorites = await response.json();
+        setIsFavorited(favorites.some((fav: Repo) => fav.id === repo.id));
+      } catch (err) {
+        console.error("Error checking favorites:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkIfFavorited();
+  }, [repo.id]);
 
   const handleAddToFavorites = async () => {
     setIsLoading(true);
@@ -75,7 +96,7 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            Adding...
+            Please wait...
           </span>
         ) : isFavorited ? (
           "⭐ Added to Favorites"
