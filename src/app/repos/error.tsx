@@ -1,5 +1,5 @@
 "use client";
-import ErrorPage from "@/component/Error";
+import ErrorPage from "@/components/Error";
 
 export default function ReposError({
   error,

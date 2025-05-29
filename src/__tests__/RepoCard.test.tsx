@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import RepoCard from "@/component/RepoCard";
+import RepoCard from "@/components/RepoCard";
 import { Repo } from "@/types/github";
 
 describe("RepoCard", () => {

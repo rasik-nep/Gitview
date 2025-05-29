@@ -1,4 +1,4 @@
-import RepoCard from "@/component/RepoCard";
+import RepoCard from "@/components/RepoCard";
 import { getUserRepos } from "@/libs/github";
 import { GITHUB_USER_NAME } from "@/constant";
 export const revalidate = 60; // ISR every 60 seconds

@@ -1,6 +1,6 @@
 "use client";
 
-import Loading from "@/component/Loading";
+import Loading from "@/components/Loading";
 import { useEffect, useState } from "react";
 
 interface FavoriteRepo {

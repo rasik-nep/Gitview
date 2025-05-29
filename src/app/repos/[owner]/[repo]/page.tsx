@@ -1,10 +1,10 @@
 import { getRepoDetails } from "@/libs/github";
 import { notFound } from "next/navigation";
-import FavoriteButton from "@/component/FavoriteButton";
+import FavoriteButton from "@/components/FavoriteButton";
 import { Metadata } from "next";
 
 type RepoPageProps = {
-  params: { owner: string; repo: string };
+  params: Promise<{ owner: string; repo: string }>;
 };
 
 export async function generateMetadata({
