@@ -7,7 +7,7 @@ export default function RepoCard({ repo }: { repo: Repo }) {
   return (
     <li
       key={repo.id}
-      className="p-4 w-[20rem] rounded-lg backdrop-blur-2xl hover:border-[1px] hover:border-foreground shadow-xl flex flex-col justify-between bg-card"
+      className="p-4 w-full md:w-[20rem] rounded-lg backdrop-blur-2xl hover:border-[1px] hover:border-foreground shadow-xl flex flex-col justify-between bg-card"
     >
       <h2 className="text-lg font-semibold text-text-500 line-clamp-1">
         {repo.name}

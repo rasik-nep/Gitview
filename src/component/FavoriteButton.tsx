@@ -67,7 +67,7 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
           px-4 py-2 rounded-md text-sm font-medium
           ${
             isFavorited
-              ? "bg-muted cursor-not-allowed"
+              ? "bg-secondary cursor-not-allowed"
               : "bg-primary text-white cursor-pointer"
           }
           disabled:opacity-50 disabled:cursor-not-allowed

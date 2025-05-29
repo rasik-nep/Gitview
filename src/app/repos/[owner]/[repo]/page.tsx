@@ -49,9 +49,9 @@ export default async function RepoPage({ params }: RepoPageProps) {
     const data = await getRepoDetails(owner, repo);
 
     return (
-      <div className="flex-grow min-h-[80vh] p-20">
+      <div className="flex-grow min-h-[80vh] py-10 md:py-20 px-5 md:px-10 lg:px-20">
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-start space-x-6 flex-col bg-card rounded-lg shadow-xl p-20 ">
+          <div className="flex items-start space-x-6 flex-col bg-card rounded-lg shadow-xl p-10 md:p-20 ">
             <h1 className="text-2xl font-bold">{data.name}</h1>
             <p className="text-gray-700 mt-2">{data.description}</p>
 

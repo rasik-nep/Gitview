@@ -20,9 +20,9 @@ export default async function Home() {
   const user = await getUserDetails(GITHUB_USER_NAME);
 
   return (
-    <div className="flex-grow min-h-[80vh] p-20">
+    <div className="flex-grow min-h-[80vh] py-10 md:py-20 px-5 md:px-10 lg:px-20">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-start space-x-6 flex-col md:flex-row bg-card rounded-lg shadow-xl p-20 ">
+        <div className="flex items-start space-x-6 flex-col md:flex-row bg-card rounded-lg shadow-xl p-5 md:p-20 ">
           <Image
             src={user.avatar_url}
             alt={`${user.name}'s avatar`}
