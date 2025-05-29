@@ -94,7 +94,7 @@ export default function FavoritesPage() {
               </div>
               <button
                 onClick={() => handleDelete(repo.id)}
-                className="bg-error text-white rounded-md p-2 cursor-pointer hover:bg-primary transition-colors duration-200 w-[10rem]"
+                className="bg-error text-white rounded-md p-2 cursor-pointer w-[10rem]"
               >
                 Delete
               </button>
