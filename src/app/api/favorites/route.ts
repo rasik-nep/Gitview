@@ -6,6 +6,7 @@ type FavoriteRepo = {
   owner: string;
   description: string;
   url: string;
+  notes?: string;
 };
 const favorites: FavoriteRepo[] = [];
 
@@ -24,6 +25,19 @@ export async function POST(req: NextRequest) {
 
   favorites.push(newRepo);
   return NextResponse.json({ message: "Added to favorites" }, { status: 201 });
+}
+
+// PATCH for updating a notes
+export async function PATCH(req: Request) {
+  const body = await req.json(); // { id, note }
+  const index = favorites.findIndex((repo) => repo.id === body.id);
+
+  if (index === -1) {
+    return NextResponse.json({ error: "Repo not found" }, { status: 404 });
+  }
+
+  favorites[index].notes = body.notes;
+  return NextResponse.json({ success: true });
 }
 
 export async function DELETE(req: Request) {

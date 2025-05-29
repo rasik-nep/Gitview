@@ -9,6 +9,7 @@ interface FavoriteRepo {
   owner: string;
   description: string;
   url: string;
+  notes?: string;
 }
 
 export default function FavoritesPage() {
@@ -49,12 +50,31 @@ export default function FavoritesPage() {
     }
   }
 
+  async function handleUpdateNote(id: number, notes: string) {
+    const res = await fetch("/api/favorites", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, notes }),
+    });
+    if (res.ok) {
+      setFavorites(
+        favorites.map((repo) => (repo.id === id ? { ...repo, notes } : repo))
+      );
+    } else {
+      console.error("Failed to update note");
+    }
+  }
   if (loading) return <Loading />;
   if (error) return <p>{error}</p>;
-  if (favorites.length === 0) return <p>No favorites yet.</p>;
+  if (favorites.length === 0)
+    return (
+      <div className=" h-screen max-w-4xl mx-auto py-8">
+        <p>No favorites yet.</p>
+      </div>
+    );
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
+    <div className=" h-screen max-w-4xl mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Your Favorites</h1>
       <ul className="space-y-4">
         {favorites.map((repo) => (
@@ -63,6 +83,11 @@ export default function FavoritesPage() {
               {repo.name}
             </a>
             <p className="text-gray-600">{repo.description}</p>
+            <input
+              type="text"
+              value={repo.notes}
+              onChange={(e) => handleUpdateNote(repo.id, e.target.value)}
+            />
             <button onClick={() => handleDelete(repo.id)}>Delete</button>
           </li>
         ))}
