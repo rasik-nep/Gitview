@@ -4,9 +4,14 @@ import { GITHUB_USER_NAME } from "@/constant";
 export const revalidate = 60; // ISR every 60 seconds
 
 export const metadata = {
-  title: "GitHub Repositories | GitHub Explorer",
+  title: "GitHub Explorer",
   description:
     "Browse public repositories of a GitHub user using GitHub Explorer.",
+  openGraph: {
+    title: "GitHub Explorer",
+    description:
+      "Browse public repositories of a GitHub user using GitHub Explorer.",
+  },
 };
 
 export default async function ReposPage() {

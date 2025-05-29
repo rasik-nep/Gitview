@@ -83,7 +83,9 @@ export default function FavoritesPage() {
               <p className="text-xl font-bold text-text-500">{repo.name}</p>
               <p className="text-text-300">{repo.description}</p>
               <div className="flex flex-col gap-2 py-5">
-                <label htmlFor="notes" className="text-text-500">Notes</label>
+                <label htmlFor="notes" className="text-text-500">
+                  Notes
+                </label>
                 <input
                   type="text"
                   id="notes"

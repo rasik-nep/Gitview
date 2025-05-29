@@ -1,10 +1,45 @@
 import { getRepoDetails } from "@/libs/github";
 import { notFound } from "next/navigation";
 import FavoriteButton from "@/component/FavoriteButton";
+import { Metadata } from "next";
 
 type RepoPageProps = {
   params: { owner: string; repo: string };
 };
+
+export async function generateMetadata({
+  params,
+}: RepoPageProps): Promise<Metadata> {
+  try {
+    const { owner, repo } = params;
+    const data = await getRepoDetails(owner, repo);
+    return {
+      title: `${data.name} by ${data.owner.login}`,
+      description: data.description || `GitHub repository: ${data.name}`,
+      openGraph: {
+        title: `${data.name} by ${data.owner.login}`,
+        description: data.description || `GitHub repository: ${data.name}`,
+        type: "website",
+        siteName: "GitView",
+      },
+      alternates: {
+        canonical: data.html_url,
+      },
+      other: {
+        "github:stars": data.stargazers_count.toString(),
+        "github:forks": data.forks_count.toString(),
+        "github:language": data.language || "Not specified",
+        "github:updated": new Date(data.updated_at).toISOString(),
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      title: "Repository Not Found",
+      description: "The requested repository could not be found.",
+    };
+  }
+}
 
 export default async function RepoPage({ params }: RepoPageProps) {
   const resolvedParams = await Promise.resolve(params);

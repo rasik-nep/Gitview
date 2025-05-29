@@ -1,6 +1,20 @@
 import { getUserDetails } from "@/libs/github";
 import Image from "next/image";
 import { GITHUB_USER_NAME } from "@/constant";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "GitView",
+    description: "A GitHub profile viewer",
+    openGraph: {
+      title: "GitView",
+      description: "A GitHub profile viewer",
+      type: "website",
+      siteName: "GitView",
+    },
+  };
+}
 
 export default async function Home() {
   const user = await getUserDetails(GITHUB_USER_NAME);

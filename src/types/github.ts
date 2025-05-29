@@ -10,7 +10,6 @@ export interface User {
   html_url: string;
   location: string | null;
   blog: string | null | "";
-  twitter_username: string | null;
   created_at: string;
   updated_at: string;
 }
