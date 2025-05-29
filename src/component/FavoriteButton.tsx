@@ -59,7 +59,7 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
   };
 
   return (
-    <div className="relative">
+    <div>
       <button
         onClick={handleAddToFavorites}
         disabled={isLoading || isFavorited}
@@ -67,8 +67,8 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
           px-4 py-2 rounded-md text-sm font-medium
           ${
             isFavorited
-              ? "bg-yellow-100 text-yellow-800 cursor-not-allowed"
-              : "bg-yellow-500 hover:bg-yellow-600 text-white"
+              ? "bg-muted cursor-not-allowed"
+              : "bg-primary text-white cursor-pointer"
           }
           disabled:opacity-50 disabled:cursor-not-allowed
           transition-colors duration-200
@@ -99,13 +99,13 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
             Please wait...
           </span>
         ) : isFavorited ? (
-          "⭐ Added to Favorites"
+          "Added to Favorites"
         ) : (
-          "⭐ Add to Favorites"
+          "Add to Favorites"
         )}
       </button>
       {error && (
-        <div className="absolute top-full left-0 mt-1 text-red-500 text-xs">
+        <div className="absolute top-full left-0 mt-1 text-error text-xs">
           {error}
         </div>
       )}

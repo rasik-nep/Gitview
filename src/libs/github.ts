@@ -1,9 +1,22 @@
-import { Repo } from "@/types/github";
+import { User, Repo } from "@/types/github";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const headers: HeadersInit = GITHUB_TOKEN
   ? { Authorization: `token ${GITHUB_TOKEN}` }
   : {};
+
+export async function getUserDetails(username: string): Promise<User> {
+  const res = await fetch(`https://api.github.com/users/${username}`, {
+    headers,
+    next: { revalidate: 60 }, // ISR
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch user details for ${username}`);
+  }
+
+  return res.json();
+}
 
 export async function getUserRepos(username: string): Promise<Repo[]> {
   const res = await fetch(`https://api.github.com/users/${username}/repos`, {

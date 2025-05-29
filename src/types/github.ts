@@ -1,7 +1,18 @@
-export interface Owner {
+export interface User {
   login: string;
   avatar_url: string;
+  name: string;
+  bio: string | null;
+  public_repos: number;
+  public_gists: number;
+  followers: number;
+  following: number;
   html_url: string;
+  location: string | null;
+  blog: string | null | "";
+  twitter_username: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Repo {
@@ -14,5 +25,5 @@ export interface Repo {
   forks_count: number;
   language: string | null;
   updated_at: string;
-  owner: Owner;
+  owner: User;
 }

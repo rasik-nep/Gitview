@@ -1,21 +1,32 @@
 "use client";
+
 import Link from "next/link";
 import { Repo } from "@/types/github";
 
-export default function Repocard({ repo }: { repo: Repo }) {
+export default function RepoCard({ repo }: { repo: Repo }) {
   return (
-    <li key={repo.id} className="p-4 border rounded-lg hover:shadow">
-      {/* this is causing the issue, need to fix this */}
+    <li
+      key={repo.id}
+      className="p-4 w-[20rem] rounded-lg backdrop-blur-2xl hover:border-[1px] hover:border-foreground shadow-xl flex flex-col justify-between bg-card"
+    >
+      <h2 className="text-lg font-semibold text-text-500 line-clamp-1">
+        {repo.name}
+      </h2>
+      <p className="text-sm text-text-300 line-clamp-2">{repo.description}</p>
+      <div className="py-2">
+        <p className="text-sm text-text-500">Starts: {repo.stargazers_count}</p>
+        <p className="text-sm text-text-500">
+          Language: {repo.language || "N/A"}
+        </p>
+      </div>
       <Link
         href={`/repos/${repo.owner.login}/${repo.name}`}
-        className="text-blue-600 font-semibold hover:underline"
+        className="py-1 w-[7rem]"
       >
-        {repo.name}
+        <p className="text-primary hover:text-secondary cursor-pointer">
+          View more
+        </p>
       </Link>
-      <p className="text-sm text-gray-600">{repo.description}</p>
-      <div className="text-xs text-gray-500 mt-2">
-        ⭐ {repo.stargazers_count} | 🖥 {repo.language || "N/A"}
-      </div>
     </li>
   );
 }
