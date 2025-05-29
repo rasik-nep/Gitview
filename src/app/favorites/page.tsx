@@ -16,7 +16,9 @@ export default function FavoritesPage() {
   const [favorites, setFavorites] = useState<FavoriteRepo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const [editingNotes, setEditingNotes] = useState<{ [key: number]: string }>(
+    {}
+  );
   useEffect(() => {
     async function fetchFavorites() {
       try {
@@ -51,6 +53,7 @@ export default function FavoritesPage() {
   }
 
   async function handleUpdateNote(id: number, notes: string) {
+    setEditingNotes((prev) => ({ ...prev, [id]: notes }));
     const res = await fetch("/api/favorites", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -85,7 +88,7 @@ export default function FavoritesPage() {
             <p className="text-gray-600">{repo.description}</p>
             <input
               type="text"
-              value={repo.notes}
+              value={editingNotes[repo.id] ?? repo.notes ?? ""}
               onChange={(e) => handleUpdateNote(repo.id, e.target.value)}
             />
             <button onClick={() => handleDelete(repo.id)}>Delete</button>
