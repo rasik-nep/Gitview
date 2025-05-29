@@ -11,7 +11,8 @@ export async function generateMetadata({
   params,
 }: RepoPageProps): Promise<Metadata> {
   try {
-    const { owner, repo } = params;
+    const resolvedParams = await Promise.resolve(params);
+    const { owner, repo } = resolvedParams;
     const data = await getRepoDetails(owner, repo);
     return {
       title: `${data.name} by ${data.owner.login}`,

@@ -14,7 +14,8 @@ export default function RepoCard({ repo }: { repo: Repo }) {
       </h2>
       <p className="text-sm text-text-300 line-clamp-2">{repo.description}</p>
       <div className="py-2">
-        <p className="text-sm text-text-500">Starts: {repo.stargazers_count}</p>
+        <p className="text-sm text-text-500">Stars: {repo.stargazers_count}</p>
+        <p className="text-sm text-text-500">Forks: {repo.forks_count}</p>
         <p className="text-sm text-text-500">
           Language: {repo.language || "N/A"}
         </p>
