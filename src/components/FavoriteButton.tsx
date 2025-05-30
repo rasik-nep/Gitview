@@ -3,8 +3,11 @@
 import { useState, useEffect } from "react";
 
 import { Repo } from "@/types/github";
+import { useSession } from "next-auth/react";
 
 export default function FavoriteButton({ repo }: { repo: Repo }) {
+  const { status } = useSession();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +17,11 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
     const checkIfFavorited = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("/api/favorites");
+        const response = await fetch("/api/favorites", {
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch favorites");
         }
@@ -31,6 +38,7 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
   }, [repo.id]);
 
   const handleAddToFavorites = async () => {
+    if (status === "unauthenticated") return;
     setIsLoading(true);
     setError(null);
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import AuthButtons from "./AuthButtons";
+import AuthButton from "./AuthButtons";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function Navbar() {
               Favorites
             </Link>
             <div className="inline-flex items-center px-1 pt-1">
-              <AuthButtons />
+              <AuthButton />
             </div>
           </div>
 
@@ -109,7 +109,7 @@ export default function Navbar() {
             Favorites
           </Link>
           <div className="inline-flex align-center px-1 pt-1 mt-2">
-            <AuthButtons />
+            <AuthButton />
           </div>
         </div>
       </div>

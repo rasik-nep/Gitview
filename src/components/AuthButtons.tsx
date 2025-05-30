@@ -2,29 +2,27 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 
-export default function AuthButtons() {
+export default function AuthButton() {
   const { data: session, status } = useSession();
-
   return (
-    <div >
-      {status === "loading" && <p>Loading...</p>}
+    <div>
       {!session ? (
         <button
           onClick={() => signIn("github")}
-          className="rounded bg-primary px-4 py-2 text-white cursor-pointer"
+          className="rounded bg-primary px-4 py-2 text-white cursor-pointer w-[13rem]"
         >
-          Sign in with GitHub
+          {status === "loading" ? "Loading..." : "Sign in with GitHub"}
         </button>
       ) : (
-        <>
-          <p>Signed in as {session.user?.name}</p>
+        <div className="flex flex-col md:flex-row gap-2 md:items-center">
+          <p className="text-text-500 ">Signed in as {session.user?.name}</p>
           <button
             onClick={() => signOut()}
             className="rounded bg-red-500 px-4 py-2 text-white cursor-pointer"
           >
             Sign out
           </button>
-        </>
+        </div>
       )}
     </div>
   );

@@ -2,6 +2,8 @@
 
 import Loading from "@/components/Loading";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import AuthButton from "@/components/AuthButtons";
 
 interface FavoriteRepo {
   id: number;
@@ -19,15 +21,28 @@ export default function FavoritesPage() {
   const [editingNotes, setEditingNotes] = useState<{ [key: number]: string }>(
     {}
   );
+  const { data: session, status } = useSession();
+
   useEffect(() => {
     async function fetchFavorites() {
+      // fetch only when user is authenticated
+      if (!session) {
+        setLoading(false);
+        return;
+      }
+
       try {
-        const res = await fetch("/api/favorites");
+        const res = await fetch("/api/favorites", {
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        });
+
         if (!res.ok) throw new Error("Failed to fetch favorites");
         const data = await res.json();
         setFavorites(data);
       } catch (err) {
-        console.log(err);
+        console.error("Error fetching favorites:", err);
         setError("Could not load favorites");
       } finally {
         setLoading(false);
@@ -35,39 +50,54 @@ export default function FavoritesPage() {
     }
 
     fetchFavorites();
-  }, []);
+  }, [session]);
 
-  async function handleDelete(id: number) {
-    const res = await fetch("/api/favorites", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
+  const deleteFavorite = async (id: number) => {
+    if (!session) return;
 
-    if (res.ok) {
-      // Refresh the list or remove item from local state
+    try {
+      const res = await fetch("/api/favorites", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (!res.ok) throw new Error("Failed to delete favorite");
       setFavorites(favorites.filter((repo) => repo.id !== id));
-    } else {
-      console.error("Failed to delete favorite");
+    } catch (err) {
+      console.error("Error deleting favorite:", err);
+      setError("Failed to delete favorite");
     }
-  }
+  };
 
-  async function handleUpdateNote(id: number, notes: string) {
-    setEditingNotes((prev) => ({ ...prev, [id]: notes }));
-    const res = await fetch("/api/favorites", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, notes }),
-    });
-    if (res.ok) {
+  const updateNote = async (id: number, notes: string) => {
+    if (!session) return;
+
+    try {
+      setEditingNotes((prev) => ({ ...prev, [id]: notes }));
+      const res = await fetch("/api/favorites", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store",
+        },
+        body: JSON.stringify({ id, notes }),
+      });
+
+      if (!res.ok) throw new Error("Failed to update note");
       setFavorites(
         favorites.map((repo) => (repo.id === id ? { ...repo, notes } : repo))
       );
-    } else {
-      console.error("Failed to update note");
+    } catch (err) {
+      console.error("Error updating note:", err);
+      setError("Failed to update note");
     }
-  }
-  if (loading) return <Loading />;
+  };
+
+  if (status === "loading" || loading) return <Loading />;
   if (error)
     return (
       <div className="flex flex-col items-center min-h-[80vh] text-center p-20">
@@ -77,6 +107,21 @@ export default function FavoritesPage() {
         <p className="text-sm text-text-500 mb-6">{error}</p>
       </div>
     );
+
+  // Unauthenticated state
+  if (!session) {
+    return (
+      <div className="flex flex-col items-center min-h-[80vh] text-center p-20">
+        <h2 className="text-xl font-semibold text-text-500 mb-4">
+          Authentication Required
+        </h2>
+        <p className="text-sm text-text-300 mb-6">
+          Please sign in to view and manage your favorite repositories.
+        </p>
+        <AuthButton />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[80vh] max-w-4xl mx-auto py-8">
@@ -98,12 +143,12 @@ export default function FavoritesPage() {
                   type="text"
                   id="notes"
                   value={editingNotes[repo.id] ?? repo.notes ?? ""}
-                  onChange={(e) => handleUpdateNote(repo.id, e.target.value)}
+                  onChange={(e) => updateNote(repo.id, e.target.value)}
                   className="border-1 border-foreground rounded-md p-2 text-text-500"
                 />
               </div>
               <button
-                onClick={() => handleDelete(repo.id)}
+                onClick={() => deleteFavorite(repo.id)}
                 className="bg-error text-white rounded-md p-2 cursor-pointer w-[10rem]"
               >
                 Delete
