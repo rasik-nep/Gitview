@@ -4,15 +4,7 @@ import Loading from "@/components/Loading";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import AuthButton from "@/components/AuthButtons";
-
-interface FavoriteRepo {
-  id: number;
-  name: string;
-  owner: string;
-  description: string;
-  url: string;
-  notes?: string;
-}
+import { FavoriteRepo } from "@/types/favoriterepo";
 
 export default function FavoritesPage() {
   const [favorites, setFavorites] = useState<FavoriteRepo[]>([]);

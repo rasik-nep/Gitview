@@ -49,15 +49,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-
-type FavoriteRepo = {
-  id: number;
-  name: string;
-  owner: string;
-  description: string;
-  url: string;
-  notes?: string;
-};
+import { FavoriteRepo } from "@/types/favoriterepo";
 
 const userFavorites: { [email: string]: FavoriteRepo[] } = {};
 

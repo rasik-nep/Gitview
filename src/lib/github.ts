@@ -1,6 +1,6 @@
 import { User, Repo } from "@/types/github";
 
-const GITHUB_TOKEN = ""; //process.env.GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const headers: HeadersInit = GITHUB_TOKEN
   ? { Authorization: `token ${GITHUB_TOKEN}` }
   : {};

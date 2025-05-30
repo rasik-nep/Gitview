@@ -3,7 +3,7 @@ import { Raleway } from "next/font/google";
 import "../styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { SessionProvider } from "next-auth/react";
+import SessionProvider from "@/components/providers/SessionProvider"; // Import the wrapper
 
 const geistRaleway = Raleway({
   variable: "--font-raleway",
