@@ -20,7 +20,7 @@ export async function generateMetadata({
     };
   }
   return {
-    title: `${data.name} by ${data.owner.login}`,
+    title: `${data.name} by ${data.owner.login} | GitView`,
     description: data.description || `GitHub repository: ${data.name}`,
     openGraph: {
       title: `${data.name} by ${data.owner.login}`,

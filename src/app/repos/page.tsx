@@ -1,10 +1,12 @@
 import RepoCard from "@/components/RepoCard";
 import { getUserRepos } from "@/lib/github";
 import { GITHUB_USER_NAME } from "@/constant";
+import { Metadata } from "next";
+
 export const revalidate = 60; // ISR every 60 seconds
 
-export const metadata = {
-  title: "GitHub Explorer",
+export const metadata: Metadata = {
+  title: "GitHub Explorer | GitView",
   description:
     "Browse public repositories of a GitHub user using GitHub Explorer.",
   openGraph: {
