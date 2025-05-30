@@ -1,3 +1,26 @@
+/**
+ * Favorites Management Hook
+ *
+ * A custom React hook that provides functionality to manage GitHub repository favorites.
+ * Uses React Query for data fetching, caching, and state management.
+ *
+ * Features:
+ * - Fetch user's favorite repositories
+ * - Add new repositories to favorites
+ * - Update notes for favorite repositories
+ * - Remove repositories from favorites
+ *
+ * Authentication:
+ * - Only works when user is authenticated
+ * - Automatically disables queries when user is not authenticated
+ *
+ * API Endpoints:
+ * - GET /api/favorites: Fetch all favorites
+ * - POST /api/favorites: Add new favorite
+ * - PATCH /api/favorites: Update favorite notes
+ * - DELETE /api/favorites: Remove favorite
+ */
+
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Repo } from "@/types/github";
 import { FavoriteRepo } from "@/types/favoriterepo";

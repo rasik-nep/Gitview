@@ -1,3 +1,19 @@
+/**
+ * GitHub API Integration Module
+ *
+ * All requests use Incremental Static Regeneration (ISR) with a 60-second cache
+ * to optimize performance and reduce API rate limiting issues.
+ *
+ * Functions:
+ * - getUserDetails(username): Fetches a GitHub user's profile information
+ * - getUserRepos(username): Retrieves all repositories for a given user
+ * - getRepoDetails(owner, repo): Gets detailed information about a specific repository
+ *
+ * Authentication:
+ * - Uses GITHUB_TOKEN from environment variables if available
+ * - Falls back to unauthenticated requests if no token is provided
+ */
+
 import { User, Repo } from "@/types/github";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
