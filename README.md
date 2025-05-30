@@ -133,7 +133,7 @@ The application is configured for deployment on Vercel:
 2. Import the project in Vercel
 3. Deploy with default settings
 
-https://gitview-eight.vercel.app/
+https://gitview-vmjt.vercel.app/
 
 ## Development Notes
 
