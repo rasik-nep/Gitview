@@ -1,77 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
 import { Repo } from "@/types/github";
 import { useSession } from "next-auth/react";
+import { useFavorites } from "@/hooks/useFavorites";
 
 export default function FavoriteButton({ repo }: { repo: Repo }) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
+  const { favorites, addFavorite, isLoading, error } = useFavorites();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // useEffect to check if repo is favorited on mount
-  useEffect(() => {
-    const checkIfFavorited = async () => {
-      if (!session) {
-        setIsLoading(false);
-        return;
-      }
-
-      setIsLoading(true);
-      try {
-        const response = await fetch("/api/favorites", {
-          headers: {
-            "Cache-Control": "no-store",
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch favorites");
-        }
-        const favorites = await response.json();
-        setIsFavorited(favorites.some((fav: Repo) => fav.id === repo.id));
-      } catch (err) {
-        console.error("Error checking favorites:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkIfFavorited();
-  }, [repo.id, session]);
+  const isFavorited = favorites?.some((fav) => fav.id === repo.id) ?? false;
 
   const handleAddToFavorites = async () => {
     if (status === "unauthenticated") {
-      alert("You are not authenticated");
       return;
     }
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch("/api/favorites", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(repo),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Failed to add to favorites");
-      }
-
-      setIsFavorited(true);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to add to favorites"
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    addFavorite.mutate(repo);
   };
 
   return (
@@ -122,7 +65,7 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
       </button>
       {error && (
         <div className="absolute top-full left-0 mt-1 text-error text-xs">
-          {error}
+          {error.message}
         </div>
       )}
     </div>

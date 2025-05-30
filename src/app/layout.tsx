@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SessionProvider from "@/components/providers/SessionProvider"; // Import the wrapper
+import QueryProvider from "@/components/providers/QueryProvider";
 
 const geistRaleway = Raleway({
   variable: "--font-raleway",
@@ -30,9 +31,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistRaleway.variable} antialiased`}>
         <SessionProvider>
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
+          <QueryProvider>
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </QueryProvider>
         </SessionProvider>
       </body>
     </html>

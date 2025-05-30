@@ -91,7 +91,7 @@ npm run dev
 - Favorites are stored in-memory
 
 ### State Management
-- React's built-in state management (useState, useEffect) for client-side state
+- React Query (@tanstack/react-query) for client-side state management with automatic caching and synchronization
 - Server-side state handled through Next.js's data fetching methods
 
 ### API Routes
