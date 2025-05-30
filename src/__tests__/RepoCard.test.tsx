@@ -72,4 +72,39 @@ describe("RepoCard", () => {
     // Check if the description is not rendered
     expect(screen.queryByText("A test repository")).not.toBeInTheDocument();
   });
+
+  it("applies correct styling classes", () => {
+    render(<RepoCard repo={mockRepo} />);
+    const card = screen.getByRole("listitem");
+
+    // Check if the card has the correct base classes
+    expect(card).toHaveClass(
+      "p-4",
+      "w-full",
+      "md:w-[20rem]",
+      "rounded-lg",
+      "backdrop-blur-2xl"
+    );
+
+    // Check if the title has correct classes
+    const title = screen.getByText("test-repo");
+    expect(title).toHaveClass(
+      "text-lg",
+      "font-semibold",
+      "text-text-500",
+      "line-clamp-1"
+    );
+
+    // Check if the description has correct classes
+    const description = screen.getByText("A test repository");
+    expect(description).toHaveClass("text-sm", "text-text-300", "line-clamp-2");
+
+    // Check if the "View more" link has correct classes
+    const viewMoreLink = screen.getByText("View more");
+    expect(viewMoreLink).toHaveClass(
+      "text-primary",
+      "hover:text-secondary",
+      "cursor-pointer"
+    );
+  });
 });
