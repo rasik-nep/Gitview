@@ -52,6 +52,7 @@ export default function FavoritesPage() {
     fetchFavorites();
   }, [session]);
 
+  // delete favorite
   const deleteFavorite = async (id: number) => {
     if (!session) return;
 
@@ -73,6 +74,7 @@ export default function FavoritesPage() {
     }
   };
 
+  // update note
   const updateNote = async (id: number, notes: string) => {
     if (!session) return;
 

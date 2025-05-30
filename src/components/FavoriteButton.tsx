@@ -6,7 +6,7 @@ import { Repo } from "@/types/github";
 import { useSession } from "next-auth/react";
 
 export default function FavoriteButton({ repo }: { repo: Repo }) {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
@@ -15,6 +15,11 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
   // useEffect to check if repo is favorited on mount
   useEffect(() => {
     const checkIfFavorited = async () => {
+      if (!session) {
+        setIsLoading(false);
+        return;
+      }
+
       setIsLoading(true);
       try {
         const response = await fetch("/api/favorites", {
@@ -35,10 +40,13 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
     };
 
     checkIfFavorited();
-  }, [repo.id]);
+  }, [repo.id, session]);
 
   const handleAddToFavorites = async () => {
-    if (status === "unauthenticated") return;
+    if (status === "unauthenticated") {
+      alert("You are not authenticated");
+      return;
+    }
     setIsLoading(true);
     setError(null);
 
