@@ -12,6 +12,7 @@ export default function FavoriteButton({ repo }: { repo: Repo }) {
 
   const handleAddToFavorites = async () => {
     if (status === "unauthenticated") {
+      alert("You are not authenticated");
       return;
     }
     addFavorite.mutate(repo);

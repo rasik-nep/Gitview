@@ -56,7 +56,9 @@ const userFavorites: { [email: string]: FavoriteRepo[] } = {};
 // Utility function to authenticate and return email
 async function getAuthenticatedEmail(): Promise<string | null> {
   const session = await auth();
-  return session?.user?.email || null;
+  if (!session) return null;
+  if (!session.user) return null;
+  return session.user.email || null;
 }
 
 // GET: Retrieve all favorites

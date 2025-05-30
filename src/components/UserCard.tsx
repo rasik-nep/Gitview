@@ -21,8 +21,8 @@ export default function UserCard({ user }: { user: User }) {
         width={150}
         height={150}
         className="rounded-full align-center"
-        loading="lazy"
         placeholder="empty"
+        priority
       />
       <div className="flex-1 py-10 md:py-0">
         <h1 className="text-3xl font-bold text-text-500">{user.name}</h1>
