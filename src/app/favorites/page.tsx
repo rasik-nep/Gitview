@@ -68,7 +68,15 @@ export default function FavoritesPage() {
     }
   }
   if (loading) return <Loading />;
-  if (error) return <p>{error}</p>;
+  if (error)
+    return (
+      <div className="flex flex-col items-center min-h-[80vh] text-center p-20">
+        <h2 className="text-xl font-semibold text-error mb-4">
+          Something went wrong
+        </h2>
+        <p className="text-sm text-text-500 mb-6">{error}</p>
+      </div>
+    );
 
   return (
     <div className="min-h-[80vh] max-w-4xl mx-auto py-8">
