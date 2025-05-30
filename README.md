@@ -10,6 +10,7 @@ GitView is a modern web application that allows users to explore GitHub profiles
 - **Notes for Favorites**: Add personal notes to your favorite repositories
 - **Responsive Design**: Beautiful UI that works on all devices
 - **Real-time Updates**: Data is refreshed every 60 seconds using ISR (Incremental Static Regeneration)
+- **GitHub Authentication**: Secure sign-in with GitHub OAuth
 
 ## Tech Stack
 
@@ -55,6 +56,36 @@ npm run dev
 - **Client Components**: Used for interactive features like favorites and notes
 - **Server Components**: Used for initial data fetching and static content
 
+#### Why ISR was chosen over SSR or SSG:
+
+1. **GitHub API Rate Limits**:
+   - GitHub's API has strict rate limits (60 requests per hour for unauthenticated requests)
+   - ISR helps manage these rate limits by:
+     - Caching responses for 60 seconds
+     - Serving cached content to multiple users
+     - Only making new API requests after the cache expires
+
+2. **Performance Benefits**:
+   - Faster page loads for users as content is served from cache
+   - Reduced server load by serving cached content
+   - Better user experience with instant page loads
+
+3. **Data Freshness**:
+   - 60-second revalidation ensures data is relatively fresh
+   - GitHub profile and repository data doesn't change very frequently
+   - Balance between performance and data freshness
+
+4. **Why not SSG**:
+   - SSG would be too static for GitHub data
+   - Would require manual rebuilds to update content
+   - Not suitable for frequently changing data
+
+5. **Why not SSR**:
+   - SSR would make a new API call for every request
+   - Would quickly hit GitHub API rate limits
+   - Slower page loads for users
+   - Higher server load
+
 ### Caching Strategy
 - GitHub API responses are cached for 60 seconds using Next.js's built-in ISR
 - Favorites are stored in-memory
@@ -66,6 +97,11 @@ npm run dev
 ### API Routes
 - RESTful API endpoints for favorites management
 - Server-side API routes for secure GitHub API communication
+
+### Authentication
+- **NextAuth.js**: Implemented for secure GitHub OAuth authentication
+- **JWT Strategy**: Used for session management with 30-day expiration
+- **Protected Routes**: Authentication required for favorites management
 
 ## Deployment
 
