@@ -1,4 +1,4 @@
-import { getRepoDetails } from "@/libs/github";
+import { getRepoDetails } from "@/lib/github";
 import { notFound } from "next/navigation";
 import FavoriteButton from "@/components/FavoriteButton";
 import { Metadata } from "next";

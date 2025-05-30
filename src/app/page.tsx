@@ -1,4 +1,4 @@
-import { getUserDetails } from "@/libs/github";
+import { getUserDetails } from "@/lib/github";
 import { GITHUB_USER_NAME } from "@/constant";
 import { Metadata } from "next";
 import UserCard from "@/components/UserCard";

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import AuthButtons from "./AuthButtons";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ export default function Navbar() {
               <span className="text-3xl font-bold text-text-500">GitView</span>
             </Link>
           </div>
-          <div className="hidden md:ml-6 md:flex md:space-x-8">
+          <div className="hidden md:ml-6 md:flex md:space-x-8 ">
             <Link
               href="/repos"
               className={`inline-flex items-center px-1 pt-1 text-xl font-medium text-text-300  ${
@@ -41,7 +42,11 @@ export default function Navbar() {
             >
               Favorites
             </Link>
+            <div className="inline-flex items-center px-1 pt-1">
+              <AuthButtons />
+            </div>
           </div>
+
           {/* Mobile menu button */}
           <div className="flex items-center md:hidden">
             <button
@@ -103,6 +108,9 @@ export default function Navbar() {
           >
             Favorites
           </Link>
+          <div className="inline-flex align-center px-1 pt-1 mt-2">
+            <AuthButtons />
+          </div>
         </div>
       </div>
     </nav>
