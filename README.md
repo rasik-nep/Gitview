@@ -88,7 +88,29 @@ npm run dev
 
 ### Caching Strategy
 - GitHub API responses are cached for 60 seconds using Next.js's built-in ISR
-- Favorites are stored in-memory
+
+### In-memory vs. local storage
+- Favorites are stored in-memory on the server for the following reasons:
+  1. **Server-Side State Management**:
+     - Centralized state management across all clients
+     - Data stored in server-side memory with user email as key
+     - Consistent state across all user sessions
+  2. **Authentication Integration**:
+     - Tight integration with GitHub OAuth
+     - Favorites associated with user email
+     - Server-side authentication verification
+  3. **Real-time Synchronization**:
+     - Immediate synchronization across all client sessions
+     - Changes reflected instantly for all active sessions
+     - Managed through React Query's client-side state
+  4. **Security**:
+     - Server-side storage prevents client-side manipulation
+     - All operations require authentication
+     - Protected from unauthorized access
+  5. **API-First Design**:
+     - RESTful API architecture
+     - All operations through API endpoints
+     - Maintainable and scalable design
 
 ### State Management
 - React Query (@tanstack/react-query) for client-side state management with automatic caching and synchronization
